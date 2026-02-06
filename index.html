@@ -9,79 +9,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glow { box-shadow: 0 0 20px rgba(62, 207, 142, 0.2); }
-        input:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 10px rgba(62, 207, 142, 0.1); }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glow { box-shadow: 0 0 30px rgba(62, 207, 142, 0.1); }
+        input:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 15px rgba(62, 207, 142, 0.1); }
+        .success-check { font-size: 5rem; color: #3ecf8e; animation: scaleIn 0.5s ease-out; }
+        @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body class="text-white min-h-screen flex items-center justify-center p-6">
 
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 blur-[120px] rounded-full"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-900/10 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/5 blur-[120px] rounded-full"></div>
     </div>
 
     <div class="max-w-xl w-full">
-        <div class="glass p-8 md:p-12 rounded-3xl glow border border-emerald-500/20">
-            <div class="mb-8">
-                <span class="text-emerald-400 text-xs font-bold tracking-[0.2em] uppercase">Phase 01: Initializing</span>
-                <h1 class="text-4xl md:text-5xl font-bold mt-2 tracking-tight">OmniStack <span class="text-emerald-400">Labs</span></h1>
-                <p class="text-gray-400 mt-4 text-lg">We're building the infrastructure for the next generation of engineers. Secure your spot in the R&D cohort.</p>
+        <div class="glass p-8 md:p-12 rounded-[2.5rem] glow border border-emerald-500/10">
+            
+            <div id="content-area">
+                <div class="mb-10 text-center md:text-left">
+                    <span class="text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">Phase 01: Initializing</span>
+                    <h1 class="text-4xl md:text-5xl font-bold mt-3 tracking-tighter">OmniStack <span class="text-emerald-400">Labs</span></h1>
+                    <p class="text-gray-400 mt-5 text-lg leading-relaxed">We're building the infrastructure for the next generation of engineers. Secure your spot in the R&D cohort.</p>
+                </div>
+
+                <form id="leadForm" class="space-y-4">
+                    <div class="relative group">
+                        <input type="text" id="name" placeholder="Full Name" required 
+                            class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white transition-all focus:bg-white/10">
+                    </div>
+                    <div class="relative group">
+                        <input type="email" id="email" placeholder="Email Address" required 
+                            class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white transition-all focus:bg-white/10">
+                    </div>
+                    <button type="submit" id="submitBtn" 
+                        class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-5 rounded-2xl transition-all active:scale-[0.97] mt-4 shadow-lg shadow-emerald-500/20">
+                        INITIALIZE ACCESS
+                    </button>
+                </form>
             </div>
 
-            <form id="leadForm" class="space-y-4">
-                <div>
-                    <input type="text" id="name" placeholder="Name" required 
-                        class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white transition-all">
-                </div>
-                <div>
-                    <input type="email" id="email" placeholder="Email address" required 
-                        class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white transition-all">
-                </div>
-                <button type="submit" id="submitBtn" 
-                    class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-4 rounded-xl transition-all active:scale-[0.98]">
-                    INITIALIZE ACCESS
-                </button>
-            </form>
-
-            <div id="success" class="hidden text-center py-8">
-                <div class="text-emerald-400 text-5xl mb-4">✓</div>
-                <h2 class="text-2xl font-bold">Access Granted</h2>
-                <p class="text-gray-400 mt-2">Check your Discord. The mission has begun.</p>
+            <div id="success" class="hidden text-center py-12">
+                <div class="success-check mb-6">✓</div>
+                <h2 class="text-3xl font-bold tracking-tight">Access Granted</h2>
+                <p class="text-gray-400 mt-4 text-lg">Your signal has been received. <br>The mission has begun on Discord.</p>
             </div>
         </div>
 
-        <p class="text-center text-gray-600 text-sm mt-8 tracking-widest uppercase">© 2026 OmniStack Labs. All rights reserved.</p>
+        <p class="text-center text-gray-700 text-[10px] mt-10 tracking-[0.4em] uppercase font-bold">© 2026 OmniStack Labs // Global R&D</p>
     </div>
 
     <script>
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Production Credentials
+        const SUPABASE_URL = 'https://cjqzdqaaweddlthcnuse.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqcXpkcWFhd2VkZGx0aGNudXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMTI4NDAsImV4cCI6MjA4NTg4ODg0MH0.X9S-UA9LBdQAo0mKujqbSpYLViOkszImlO_aSLGl8bE';
+        
+        // Initialize Supabase Client
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const form = document.getElementById('leadForm');
-        const success = document.getElementById('success');
+        const contentArea = document.getElementById('content-area');
+        const successState = document.getElementById('success');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = 'PROCESSING...';
-            submitBtn.disabled = true;
-
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
 
-            const { error } = await supabaseClient
-                .from('leads')
-                .insert([{ name, email }]);
+            // Loading State
+            submitBtn.innerText = 'ENCRYPTING...';
+            submitBtn.disabled = true;
 
-            if (error) {
-                alert("Error: " + error.message);
+            try {
+                const { error } = await _supabase
+                    .from('leads')
+                    .insert([{ name, email }]);
+
+                if (error) throw error;
+
+                // Success!
+                contentArea.classList.add('hidden');
+                successState.classList.remove('hidden');
+            } catch (error) {
+                console.error('System Error:', error.message);
+                alert("Signal Interrupted: " + error.message);
                 submitBtn.innerText = 'INITIALIZE ACCESS';
                 submitBtn.disabled = false;
-            } else {
-                form.classList.add('hidden');
-                success.classList.remove('hidden');
             }
         });
     </script>
