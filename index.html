@@ -9,35 +9,42 @@
     <style>
         body { background-color: #050505; color: #ffffff; font-family: 'Inter', sans-serif; }
         .omni-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card-blur { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); }
+        .card-blur { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body class="antialiased">
     <div class="max-w-5xl mx-auto px-6 py-24 text-center">
         <header class="mb-20">
+            <h2 class="text-xs tracking-[0.3em] uppercase text-indigo-500 font-bold mb-4">System Status: Operational</h2>
             <h1 class="text-6xl font-black mb-6 tracking-tight uppercase">OMNISTACK <span class="omni-gradient">LABS</span></h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto">High-performance tech infrastructure. Secure. Automated. Scalable.</p>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light">High-performance infrastructure for the next generation of business automation.</p>
         </header>
 
-        <section class="max-w-md mx-auto bg-gray-900/50 p-8 rounded-[2rem] border border-gray-800 card-blur">
-            <h2 class="text-2xl font-bold mb-6">Inquire at OmniStack</h2>
+        <section class="max-w-md mx-auto bg-gray-900/40 p-10 rounded-[2.5rem] card-blur">
+            <h2 class="text-2xl font-bold mb-2">Initialize Connection</h2>
+            <p class="text-gray-500 text-sm mb-8">Enter credentials to join the network.</p>
+            
             <form id="leadForm" class="space-y-4">
-                <input type="text" id="name" placeholder="Full Name" required class="w-full bg-black border border-gray-800 p-4 rounded-xl focus:border-indigo-500 outline-none transition">
-                <input type="email" id="email" placeholder="Work Email" required class="w-full bg-black border border-gray-800 p-4 rounded-xl focus:border-indigo-500 outline-none transition">
-                <button type="submit" id="submitBtn" class="w-full bg-white text-black py-4 rounded-xl font-black hover:bg-gray-200 transition-all active:scale-95">
-                    INITIALIZE CONNECTION
+                <input type="text" id="name" placeholder="Full Name" required 
+                    class="w-full bg-black/50 border border-gray-800 p-4 rounded-2xl focus:border-indigo-500 outline-none transition text-white">
+                <input type="email" id="email" placeholder="Email Address" required 
+                    class="w-full bg-black/50 border border-gray-800 p-4 rounded-2xl focus:border-indigo-500 outline-none transition text-white">
+                <button type="submit" id="submitBtn" 
+                    class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black hover:bg-indigo-500 transition-all active:scale-95 shadow-lg shadow-indigo-500/20">
+                    ESTABLISH LINK
                 </button>
             </form>
-            <p id="responseMsg" class="mt-4 text-sm font-bold hidden"></p>
+            <p id="responseMsg" class="mt-6 text-sm font-bold hidden"></p>
         </section>
 
-        <footer class="mt-20 text-gray-700 text-xs tracking-widest">© 2026 OMNISTACK LABS</footer>
+        <footer class="mt-24 text-gray-700 text-[10px] tracking-[0.5em] uppercase">
+            &copy; 2026 OmniStack Labs &bull; Built on Linux
+        </footer>
     </div>
 
     <script>
-        // --- 1. PLUG IN YOUR KEYS HERE ---
-        const SUPABASE_URL = 'PASTE_YOUR_PROJECT_URL_HERE';
-        const SUPABASE_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
+        const SUPABASE_URL = 'https://cjqzdqaaweddlthcnuse.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqcXpkcWFhd2VkZGx0aGNudXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMTI4NDAsImV4cCI6MjA4NTg4ODg0MH0.X9S-UA9LBdQAo0mKujqbSpYLViOkszImlO_aSLGl8bE';
         
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -47,29 +54,32 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            btn.innerText = "CONNECTING...";
+            btn.innerText = "LINKING...";
             btn.disabled = true;
 
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
 
-            // --- 2. THE INSERT COMMAND ---
-            const { error } = await supabaseClient
-                .from('leads')
-                .insert([{ name, email }]);
+            try {
+                const { error } = await supabaseClient
+                    .from('leads')
+                    .insert([{ name, email }]);
 
-            if (error) {
-                msg.innerText = "ERROR: Connection failed.";
-                msg.classList.remove('hidden', 'text-green-500');
-                msg.classList.add('text-red-500');
-            } else {
-                msg.innerText = "SUCCESS: Lead encrypted and sent.";
-                msg.classList.remove('hidden', 'text-red-500');
-                msg.classList.add('text-green-500');
+                if (error) throw error;
+
+                msg.innerText = "LINK ESTABLISHED. DISCORD NOTIFIED.";
+                msg.className = "mt-6 text-sm font-bold text-indigo-400 tracking-widest uppercase";
+                msg.classList.remove('hidden');
                 form.reset();
+            } catch (err) {
+                console.error(err);
+                msg.innerText = "LINK FAILED: " + err.message;
+                msg.className = "mt-6 text-sm font-bold text-red-500 uppercase";
+                msg.classList.remove('hidden');
+            } finally {
+                btn.innerText = "ESTABLISH LINK";
+                btn.disabled = false;
             }
-            btn.innerText = "INITIALIZE CONNECTION";
-            btn.disabled = false;
         });
     </script>
 </body>
