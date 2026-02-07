@@ -3,100 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniStack Labs | The Future of R&D</title>
+    <title>OmniStack Labs | Precision Automation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glow { box-shadow: 0 0 30px rgba(62, 207, 142, 0.1); }
-        input:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 15px rgba(62, 207, 142, 0.1); }
-        .success-check { font-size: 5rem; color: #3ecf8e; animation: scaleIn 0.5s ease-out; }
-        @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        body { background-color: #050505; color: #ffffff; font-family: 'Inter', sans-serif; }
+        .omni-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-blur { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="text-white min-h-screen flex items-center justify-center p-6">
+<body class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 py-24 text-center">
+        <header class="mb-20">
+            <h1 class="text-6xl font-black mb-6 tracking-tight uppercase">OMNISTACK <span class="omni-gradient">LABS</span></h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">High-performance tech infrastructure. Secure. Automated. Scalable.</p>
+        </header>
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-900/10 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/5 blur-[120px] rounded-full"></div>
-    </div>
+        <section class="max-w-md mx-auto bg-gray-900/50 p-8 rounded-[2rem] border border-gray-800 card-blur">
+            <h2 class="text-2xl font-bold mb-6">Inquire at OmniStack</h2>
+            <form id="leadForm" class="space-y-4">
+                <input type="text" id="name" placeholder="Full Name" required class="w-full bg-black border border-gray-800 p-4 rounded-xl focus:border-indigo-500 outline-none transition">
+                <input type="email" id="email" placeholder="Work Email" required class="w-full bg-black border border-gray-800 p-4 rounded-xl focus:border-indigo-500 outline-none transition">
+                <button type="submit" id="submitBtn" class="w-full bg-white text-black py-4 rounded-xl font-black hover:bg-gray-200 transition-all active:scale-95">
+                    INITIALIZE CONNECTION
+                </button>
+            </form>
+            <p id="responseMsg" class="mt-4 text-sm font-bold hidden"></p>
+        </section>
 
-    <div class="max-w-xl w-full">
-        <div class="glass p-8 md:p-12 rounded-[2.5rem] glow border border-emerald-500/10">
-            
-            <div id="content-area">
-                <div class="mb-10 text-center md:text-left">
-                    <span class="text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">Phase 01: Initializing</span>
-                    <h1 class="text-4xl md:text-5xl font-bold mt-3 tracking-tighter">OmniStack <span class="text-emerald-400">Labs</span></h1>
-                    <p class="text-gray-400 mt-5 text-lg leading-relaxed">We're building the infrastructure for the next generation of engineers. Secure your spot in the R&D cohort.</p>
-                </div>
-
-                <form id="leadForm" class="space-y-4">
-                    <div class="relative group">
-                        <input type="text" id="name" placeholder="Full Name" required 
-                            class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white transition-all focus:bg-white/10">
-                    </div>
-                    <div class="relative group">
-                        <input type="email" id="email" placeholder="Email Address" required 
-                            class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white transition-all focus:bg-white/10">
-                    </div>
-                    <button type="submit" id="submitBtn" 
-                        class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-5 rounded-2xl transition-all active:scale-[0.97] mt-4 shadow-lg shadow-emerald-500/20">
-                        INITIALIZE ACCESS
-                    </button>
-                </form>
-            </div>
-
-            <div id="success" class="hidden text-center py-12">
-                <div class="success-check mb-6">✓</div>
-                <h2 class="text-3xl font-bold tracking-tight">Access Granted</h2>
-                <p class="text-gray-400 mt-4 text-lg">Your signal has been received. <br>The mission has begun on Discord.</p>
-            </div>
-        </div>
-
-        <p class="text-center text-gray-700 text-[10px] mt-10 tracking-[0.4em] uppercase font-bold">© 2026 OmniStack Labs // Global R&D</p>
+        <footer class="mt-20 text-gray-700 text-xs tracking-widest">© 2026 OMNISTACK LABS</footer>
     </div>
 
     <script>
-        // Production Credentials
-        const SUPABASE_URL = 'https://cjqzdqaaweddlthcnuse.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqcXpkcWFhd2VkZGx0aGNudXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMTI4NDAsImV4cCI6MjA4NTg4ODg0MH0.X9S-UA9LBdQAo0mKujqbSpYLViOkszImlO_aSLGl8bE';
+        // --- 1. PLUG IN YOUR KEYS HERE ---
+        const SUPABASE_URL = 'PASTE_YOUR_PROJECT_URL_HERE';
+        const SUPABASE_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
         
-        // Initialize Supabase Client
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const form = document.getElementById('leadForm');
-        const contentArea = document.getElementById('content-area');
-        const successState = document.getElementById('success');
+        const msg = document.getElementById('responseMsg');
+        const btn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
+            btn.innerText = "CONNECTING...";
+            btn.disabled = true;
+
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
 
-            // Loading State
-            submitBtn.innerText = 'ENCRYPTING...';
-            submitBtn.disabled = true;
+            // --- 2. THE INSERT COMMAND ---
+            const { error } = await supabaseClient
+                .from('leads')
+                .insert([{ name, email }]);
 
-            try {
-                const { error } = await _supabase
-                    .from('leads')
-                    .insert([{ name, email }]);
-
-                if (error) throw error;
-
-                // Success!
-                contentArea.classList.add('hidden');
-                successState.classList.remove('hidden');
-            } catch (error) {
-                console.error('System Error:', error.message);
-                alert("Signal Interrupted: " + error.message);
-                submitBtn.innerText = 'INITIALIZE ACCESS';
-                submitBtn.disabled = false;
+            if (error) {
+                msg.innerText = "ERROR: Connection failed.";
+                msg.classList.remove('hidden', 'text-green-500');
+                msg.classList.add('text-red-500');
+            } else {
+                msg.innerText = "SUCCESS: Lead encrypted and sent.";
+                msg.classList.remove('hidden', 'text-red-500');
+                msg.classList.add('text-green-500');
+                form.reset();
             }
+            btn.innerText = "INITIALIZE CONNECTION";
+            btn.disabled = false;
         });
     </script>
 </body>
